@@ -22,7 +22,14 @@ void Snake::Game::init()
 		}
 	}
 	player = new Player();
-	player->init(30, 30);
+    food = new Food();
+
+    srand(time(0));
+    int foodX = rand() % screen_w;
+    int foodY = rand() % screen_h;
+
+	player->init(screen_w / 2 - 20, screen_h / 2 - 20);
+    food->init(foodX, foodY);
 
 	is_running = true;
 }
@@ -32,12 +39,14 @@ void Snake::Game::render()
 	SDL_SetRenderDrawColor(renderer, 255, 255, 150, 255);
 	SDL_RenderClear(renderer);
 	player->render(renderer);
+    food->render(renderer);
 	SDL_RenderPresent(renderer);
 }
 
 void Snake::Game::update()
 {
-    player->update();
+    player->update(screen_w, screen_h);
+    food->update(player->m_playerRect, screen_w, screen_h);
 }
 
 void Snake::Game::handleEvents() {

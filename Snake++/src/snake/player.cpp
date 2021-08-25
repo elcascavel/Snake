@@ -49,16 +49,12 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 	}
 }
 
-void Snake::Player::update()
+void Snake::Player::update(int width, int height)
 {
 
-	if (m_playerRect.x < 0)
+	if (m_playerRect.x < 0 || m_playerRect.x + m_playerRect.w > width)
 	{
-		m_playerRect.x += m_speed;
-	}
-	else if (m_playerRect.x + m_playerRect.w > 640)
-	{
-		m_playerRect.x -= m_speed;
+		m_speed = 0;
 	}
 
 	switch (m_snakeDir)
@@ -79,12 +75,8 @@ void Snake::Player::update()
 		break;
 	}
 
-	if (m_playerRect.y < 0)
+	if (m_playerRect.y < 0 || m_playerRect.y + m_playerRect.h > height)
 	{
-		m_playerRect.y += m_speed;
-	}
-	else if (m_playerRect.y + m_playerRect.h > 480)
-	{
-		m_playerRect.y -= m_speed;
+		m_speed = 0;
 	}
 }

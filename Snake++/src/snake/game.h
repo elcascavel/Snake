@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "player.h"
+#include "food.h"
 
 namespace Snake {
 	class Game {
@@ -22,9 +23,10 @@ namespace Snake {
 		SDL_Renderer* renderer = nullptr;
 
 		Player* player = nullptr;
+		Food* food = nullptr;
 
-		int screen_w = 0;
-		int screen_h = 0;
+		int screen_w = 640;
+		int screen_h = 480;
 
 		bool is_running = false;
 	};

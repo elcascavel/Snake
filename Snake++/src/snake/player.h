@@ -6,9 +6,10 @@ namespace Snake {
 		void init(int x, int y);
 		void render(SDL_Renderer* renderer);
 		void setDirection(SDL_KeyCode direction);
-		void update();
-	private:
+		void update(int width, int height);
+
 		SDL_Rect m_playerRect;
+	private:
 
 		enum snakeDirection { North, West, East, South };
 		snakeDirection m_snakeDir = South;
