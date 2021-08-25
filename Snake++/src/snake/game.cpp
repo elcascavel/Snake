@@ -37,42 +37,51 @@ void Snake::Game::render()
 
 void Snake::Game::update()
 {
-	// TBD
+    player->update();
 }
 
 void Snake::Game::handleEvents() {
-	SDL_Event event;
-	if (SDL_PollEvent(&event))
-	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			is_running = false;
-			break;
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym) {
-			case SDLK_ESCAPE:
-				is_running = false;
-				break;
-			}
-			break;
-		case SDL_WINDOWEVENT:
-			switch (event.window.event) {
-			case SDL_WINDOWEVENT_SHOWN:
-			case SDL_WINDOWEVENT_SIZE_CHANGED:
-				SDL_GetWindowSize(window, &screen_w, &screen_h);
-				break;
-			}
-			break;
-			{
-			default:
-				break;
-			}
-		}
-	}
+    SDL_Event event;
+    if (SDL_PollEvent(&event)) {
+        switch (event.type) {
+        case SDL_QUIT:
+            is_running = false;
+            break;
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym) {
+            case SDLK_UP:
+                player->setDirection(SDLK_UP);
+                break;
+            case SDLK_DOWN:
+                player->setDirection(SDLK_DOWN);
+                break;
+            case SDLK_LEFT:
+                player->setDirection(SDLK_LEFT);
+                break;
+            case SDLK_RIGHT:
+                player->setDirection(SDLK_RIGHT);
+                break;
+            case SDLK_ESCAPE:
+                is_running = false;
+                break;
+            }
+            break;
+        case SDL_WINDOWEVENT:
+            switch (event.window.event) {
+            case SDL_WINDOWEVENT_SHOWN:
+            case SDL_WINDOWEVENT_SIZE_CHANGED:
+                SDL_GetWindowSize(window, &screen_w, &screen_h);
+                break;
+            }
+            break;
+        default:
+            break;
+        }
+    }
 }
 
-void Snake::Game::clean() {
+void Snake::Game::clean()
+{
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
