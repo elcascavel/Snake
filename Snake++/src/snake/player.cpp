@@ -1,18 +1,19 @@
 #include <SDL.h>
 #include "player.h"
+#include "game.h"
 
 void Snake::Player::init(int x, int y)
 {
-	playerRect.x = x;
-	playerRect.y = y;
-	playerRect.w = 20;
-	playerRect.h = 20;
+	m_playerRect.x = x;
+	m_playerRect.y = y;
+	m_playerRect.w = 20;
+	m_playerRect.h = 20;
 }
 
 void Snake::Player::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-	SDL_RenderFillRect(renderer, &playerRect);
+	SDL_RenderFillRect(renderer, &m_playerRect);
 }
 
 void Snake::Player::setDirection(SDL_KeyCode direction)
@@ -20,27 +21,27 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 	switch (direction)
 	{
 	case SDLK_UP:
-		if (snakeDir != South)
+		if (m_snakeDir != South)
 		{
-			snakeDir = North;
+			m_snakeDir = North;
 		}
 		break;
 	case SDLK_DOWN:
-		if (snakeDir != North)
+		if (m_snakeDir != North)
 		{
-			snakeDir = South;
+			m_snakeDir = South;
 		}
 		break;
 	case SDLK_LEFT:
-		if (snakeDir != East)
+		if (m_snakeDir != East)
 		{
-			snakeDir = West;
+			m_snakeDir = West;
 		}	
 		break;
 	case SDLK_RIGHT:
-		if (snakeDir != West)
+		if (m_snakeDir != West)
 		{
-			snakeDir = East;
+			m_snakeDir = East;
 		}
 		break;
 	default:
@@ -50,21 +51,40 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 
 void Snake::Player::update()
 {
-	switch (snakeDir)
+
+	if (m_playerRect.x < 0)
+	{
+		m_playerRect.x += m_speed;
+	}
+	else if (m_playerRect.x + m_playerRect.w > 640)
+	{
+		m_playerRect.x -= m_speed;
+	}
+
+	switch (m_snakeDir)
 	{
 	case North:
-		playerRect.y -= speed;
+		m_playerRect.y -= m_speed;
 		break;
 	case West:
-		playerRect.x -= speed;
+		m_playerRect.x -= m_speed;
 		break;
 	case East:
-		playerRect.x += speed;
+		m_playerRect.x += m_speed;
 		break;
 	case South:
-		playerRect.y += speed;
+		m_playerRect.y += m_speed;
 		break;
 	default:
 		break;
+	}
+
+	if (m_playerRect.y < 0)
+	{
+		m_playerRect.y += m_speed;
+	}
+	else if (m_playerRect.y + m_playerRect.h > 480)
+	{
+		m_playerRect.y -= m_speed;
 	}
 }

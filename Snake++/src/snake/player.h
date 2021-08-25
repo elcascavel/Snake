@@ -8,10 +8,11 @@ namespace Snake {
 		void setDirection(SDL_KeyCode direction);
 		void update();
 	private:
-		SDL_Rect playerRect;
-		enum snakeDirection { North, West, East, South };
-		snakeDirection snakeDir = South;
+		SDL_Rect m_playerRect;
 
-		uint32_t speed = 2;
+		enum snakeDirection { North, West, East, South };
+		snakeDirection m_snakeDir = South;
+
+		uint32_t m_speed = 2;
 	};
 }
