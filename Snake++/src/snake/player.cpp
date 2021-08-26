@@ -4,16 +4,16 @@
 
 void Snake::Player::init(int x, int y)
 {
-	m_playerRect.x = x;
-	m_playerRect.y = y;
-	m_playerRect.w = 20;
-	m_playerRect.h = 20;
+	m_playerRect[0].x = x;
+	m_playerRect[0].y = y;
+	m_playerRect[0].w = 15;
+	m_playerRect[0].h = 15;
 }
 
 void Snake::Player::render(SDL_Renderer* renderer)
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-	SDL_RenderFillRect(renderer, &m_playerRect);
+	SDL_SetRenderDrawColor(renderer, 235, 49, 108, 255);
+	SDL_RenderFillRect(renderer, &m_playerRect[0]);
 }
 
 void Snake::Player::setDirection(SDL_KeyCode direction)
@@ -51,8 +51,19 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 
 void Snake::Player::update(int width, int height)
 {
+	if (m_lastUpdate == 0)
+	{
+		m_lastUpdate = SDL_GetTicks();
+	}
 
-	if (m_playerRect.x < 0 || m_playerRect.x + m_playerRect.w > width)
+	int currentTime = SDL_GetTicks();
+	m_timeDelta = (currentTime - m_lastUpdate) / 1000.0;
+
+	m_lastUpdate = currentTime;
+
+	double speedDelta = m_speed * m_timeDelta;
+
+	if (m_playerRect[0].x < 0 || m_playerRect[0].x + m_playerRect[0].w > width)
 	{
 		m_speed = 0;
 	}
@@ -60,22 +71,22 @@ void Snake::Player::update(int width, int height)
 	switch (m_snakeDir)
 	{
 	case North:
-		m_playerRect.y -= m_speed;
+		m_playerRect[0].y -= speedDelta;
 		break;
 	case West:
-		m_playerRect.x -= m_speed;
+		m_playerRect[0].x -= speedDelta;
 		break;
 	case East:
-		m_playerRect.x += m_speed;
+		m_playerRect[0].x += speedDelta;
 		break;
 	case South:
-		m_playerRect.y += m_speed;
+		m_playerRect[0].y += speedDelta;
 		break;
 	default:
 		break;
 	}
 
-	if (m_playerRect.y < 0 || m_playerRect.y + m_playerRect.h > height)
+	if (m_playerRect[0].y < 0 || m_playerRect[0].y + m_playerRect[0].h > height)
 	{
 		m_speed = 0;
 	}

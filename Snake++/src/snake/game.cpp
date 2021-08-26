@@ -11,7 +11,7 @@ void Snake::Game::init()
 
 	else {
 		// Create window
-		window = SDL_CreateWindow("Snake++", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -28,7 +28,7 @@ void Snake::Game::init()
     int foodX = rand() % screen_w;
     int foodY = rand() % screen_h;
 
-	player->init(screen_w / 2 - 20, screen_h / 2 - 20);
+	player->init(screen_w / 2 - 15, screen_h / 2 - 15);
     food->init(foodX, foodY);
 
 	is_running = true;
@@ -36,7 +36,7 @@ void Snake::Game::init()
 
 void Snake::Game::render()
 {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 150, 255);
+	SDL_SetRenderDrawColor(renderer, 76, 71, 79, 255);
 	SDL_RenderClear(renderer);
 	player->render(renderer);
     food->render(renderer);
@@ -46,7 +46,7 @@ void Snake::Game::render()
 void Snake::Game::update()
 {
     player->update(screen_w, screen_h);
-    food->update(player->m_playerRect, screen_w, screen_h);
+    food->update(player->m_playerRect[0], screen_w, screen_h);
 }
 
 void Snake::Game::handleEvents() {

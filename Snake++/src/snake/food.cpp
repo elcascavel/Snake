@@ -6,8 +6,8 @@ void Snake::Food::init(int x, int y)
 {
 	foodRect.x = x;
 	foodRect.y = y;
-	foodRect.w = 20;
-	foodRect.h = 20;
+	foodRect.w = 15;
+	foodRect.h = 15;
 }
 
 void Snake::Food::render(SDL_Renderer* renderer)
@@ -60,7 +60,7 @@ bool Snake::Food::checkCollision(SDL_Rect a, SDL_Rect b)
 void Snake::Food::update(SDL_Rect player, int width, int height)
 {
 	if (checkCollision(player, foodRect))
-	{
+	{	
 		srand(time(0));
 
 		foodRect.x = rand() % width;
