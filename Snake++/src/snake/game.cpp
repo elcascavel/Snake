@@ -3,8 +3,6 @@
 
 void Snake::Game::init()
 {
-    const int SCREEN_FPS = 60;
-    const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -13,7 +11,7 @@ void Snake::Game::init()
 
 	else {
 		// Create window
-		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_w, screen_w, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -25,10 +23,11 @@ void Snake::Game::init()
 	}
 	player = new Player();
     food = new Food();
+    board = new Board();
 
     srand(time(0));
-    int foodX = rand() % screen_w;
-    int foodY = rand() % screen_h;
+    int foodX = rand() % board->getGridSize();
+    int foodY = rand() % board->getGridSize();
 
 	player->init(screen_w / 2 - 15, screen_h / 2 - 15);
     food->init(foodX, foodY);
@@ -47,7 +46,7 @@ void Snake::Game::render()
 
 void Snake::Game::update()
 {
-    player->update(screen_w, screen_h);
+    player->update(screen_w, screen_h, board->getGridSize());
     food->update(player->m_playerRect[0], screen_w, screen_h);
 }
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "player.h"
 #include "food.h"
+#include "board.h"
 
 namespace Snake {
 	class Game {
@@ -24,9 +25,10 @@ namespace Snake {
 
 		Player* player = nullptr;
 		Food* food = nullptr;
+		Board* board = nullptr;
 
 		int screen_w = 640;
-		int screen_h = 480;
+		int screen_h = 640;
 
 		bool is_running = false;
 	};

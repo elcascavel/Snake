@@ -49,31 +49,37 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 	}
 }
 
-void Snake::Player::update(int width, int height)
+void Snake::Player::update(int width, int height, int gridSize)
 {
-	if (m_playerRect[0].x < 0 || m_playerRect[0].x + m_playerRect[0].w > width)
+	if (m_playerRect[0].x < 0)
 	{
-		m_speed = 0;
+		if (m_playerRect[0].x + m_playerRect[0].w > width)
+		{
+			m_speed = 0;
+		}
 	}
 
-	else if (m_playerRect[0].y < 0 || m_playerRect[0].y + m_playerRect[0].h > height)
+	else if (m_playerRect[0].y < 0)
 	{
-		m_speed = 0;
+		if (m_playerRect[0].y + m_playerRect[0].h > height)
+		{
+			m_speed = 0;
+		}
 	}
 
 	switch (m_snakeDir)
 	{
 	case North:
-		m_playerRect[0].y -= m_speed;
+		m_playerRect[0].y -= width / gridSize;
 		break;
 	case West:
-		m_playerRect[0].x -= m_speed;
+		m_playerRect[0].x -= width / gridSize;
 		break;
 	case East:
-		m_playerRect[0].x += m_speed;
+		m_playerRect[0].x += width / gridSize;
 		break;
 	case South:
-		m_playerRect[0].y += m_speed;
+		m_playerRect[0].y += width / gridSize;
 		break;
 	default:
 		break;
