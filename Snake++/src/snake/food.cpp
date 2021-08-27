@@ -63,7 +63,12 @@ void Snake::Food::update(SDL_Rect player, int width, int height, int gridSize)
 	{	
 		srand(time(0));
 
-		foodRect.x = rand() % width;
-		foodRect.y = rand() % height;
+		int cellX = rand() % gridSize;
+		int cellY = rand() % gridSize;
+
+		foodRect.x = (width / gridSize) * cellX;
+		foodRect.y = (height / gridSize) * cellY;
+		std::cout << "X = " << foodRect.x << std::endl;
+		std::cout << "Y = " << foodRect.y << std::endl;
 	}
 }

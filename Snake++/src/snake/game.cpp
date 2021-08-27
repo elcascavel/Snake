@@ -11,7 +11,7 @@ void Snake::Game::init()
 
 	else {
 		// Create window
-		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_w, screen_w, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_w, screen_h, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -26,8 +26,8 @@ void Snake::Game::init()
     board = new Board();
 
     srand(time(0));
-    int foodX = rand() % board->getGridSize();
-    int foodY = rand() % board->getGridSize();
+    int foodX = rand() % screen_w / board->getGridSize();
+    int foodY = rand() % screen_h / board->getGridSize();
 
 	player->init(screen_w / 2 - 15, screen_h / 2 - 15);
     food->init(foodX, foodY);
