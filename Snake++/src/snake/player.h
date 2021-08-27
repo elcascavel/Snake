@@ -18,6 +18,6 @@ namespace Snake {
 
 		int m_lastUpdate = 0;
 		double m_timeDelta;
-		int m_speed = 128;
+		int m_speed = 2;
 	};
 }
