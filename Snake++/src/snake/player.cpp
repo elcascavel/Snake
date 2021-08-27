@@ -51,35 +51,43 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 
 void Snake::Player::update(int width, int height, int gridSize)
 {
+
+	float speedX = (height / gridSize) / timeStep;
+	float speedY = (width / gridSize) / timeStep;
+
 	if (m_playerRect[0].x < 0)
 	{
-		if (m_playerRect[0].x + m_playerRect[0].w > width)
-		{
-			m_speed = 0;
-		}
+		speedX = 0;
+		speedY = 0;
+	}
+	else if (m_playerRect[0].x > width - m_playerRect[0].w)
+	{
+		m_playerRect[0].x = width - m_playerRect[0].w;
 	}
 
-	else if (m_playerRect[0].y < 0)
+	if (m_playerRect[0].y < 0)
 	{
-		if (m_playerRect[0].y + m_playerRect[0].h > height)
-		{
-			m_speed = 0;
-		}
+		speedY = 0;
+		speedY = 0;
 	}
+	else if (m_playerRect[0].y > height - m_playerRect[0].h)
+	{
+		m_playerRect[0].y = height - m_playerRect[0].h;
+	}	
 
 	switch (m_snakeDir)
 	{
 	case North:
-		m_playerRect[0].y -= width / gridSize;
+		m_playerRect[0].y -= speedY;
 		break;
 	case West:
-		m_playerRect[0].x -= width / gridSize;
+		m_playerRect[0].x -= speedX;
 		break;
 	case East:
-		m_playerRect[0].x += width / gridSize;
+		m_playerRect[0].x += speedX;
 		break;
 	case South:
-		m_playerRect[0].y += width / gridSize;
+		m_playerRect[0].y += speedY;
 		break;
 	default:
 		break;

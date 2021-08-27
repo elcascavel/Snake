@@ -47,7 +47,7 @@ void Snake::Game::render()
 void Snake::Game::update()
 {
     player->update(screen_w, screen_h, board->getGridSize());
-    food->update(player->m_playerRect[0], screen_w, screen_h);
+    food->update(player->m_playerRect[0], screen_w, screen_h, board->getGridSize());
 }
 
 void Snake::Game::handleEvents() {

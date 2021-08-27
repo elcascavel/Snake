@@ -57,7 +57,7 @@ bool Snake::Food::checkCollision(SDL_Rect a, SDL_Rect b)
 	return true;
 }
 
-void Snake::Food::update(SDL_Rect player, int width, int height)
+void Snake::Food::update(SDL_Rect player, int width, int height, int gridSize)
 {
 	if (checkCollision(player, foodRect))
 	{	

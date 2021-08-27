@@ -28,7 +28,9 @@ int main(int arc, char* args[]) {
 			avgFPS = 0;
 		}
 		game->handleEvents();
+
 		game->update();
+
 		game->render();
 
 		++countedFrames;

@@ -3,6 +3,7 @@
 #include "player.h"
 #include "food.h"
 #include "board.h"
+#include "../utils/timer.h"
 
 namespace Snake {
 	class Game {

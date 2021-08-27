@@ -15,6 +15,6 @@ namespace Snake {
 		enum snakeDirection { North, West, East, South };
 		snakeDirection m_snakeDir = South;
 
-		int m_speed = 2;
+		int timeStep = 20;
 	};
 }
