@@ -6,7 +6,7 @@ namespace Snake {
 	public:
 		int getGridSize();
 	private:
-		static const int m_gridSize = 10;
-		int m_boardSize[m_gridSize][m_gridSize];
+		static const int m_gridSize = 30;
+		int m_board[m_gridSize][m_gridSize];
 	};
 }

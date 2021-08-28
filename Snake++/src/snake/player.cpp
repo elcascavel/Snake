@@ -4,16 +4,16 @@
 
 void Snake::Player::init(int x, int y)
 {
-	m_playerRect[0].x = x;
-	m_playerRect[0].y = y;
-	m_playerRect[0].w = 15;
-	m_playerRect[0].h = 15;
+	m_head.x = x;
+	m_head.y = y;
+	m_head.w = m_snakeSpace;
+	m_head.h = m_snakeSpace;
 }
 
 void Snake::Player::render(SDL_Renderer* renderer)
 {
 	SDL_SetRenderDrawColor(renderer, 235, 49, 108, 255);
-	SDL_RenderFillRect(renderer, &m_playerRect[0]);
+	SDL_RenderFillRect(renderer, &m_head);
 }
 
 void Snake::Player::setDirection(SDL_KeyCode direction)
@@ -49,47 +49,57 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 	}
 }
 
-void Snake::Player::update(int width, int height, int gridSize)
+void Snake::Player::takeStep(int position)
 {
 
-	float speedX = (height / gridSize) / timeStep;
-	float speedY = (width / gridSize) / timeStep;
+}
 
-	if (m_playerRect[0].x < 0)
+void Snake::Player::update(int width, int height, int gridSize)
+{
+	timeStep--;
+	if (timeStep <= 0)
 	{
-		speedX = 0;
-		speedY = 0;
-	}
-	else if (m_playerRect[0].x > width - m_playerRect[0].w)
-	{
-		m_playerRect[0].x = width - m_playerRect[0].w;
-	}
+		float speedX = (height / gridSize);
+		float speedY = (width / gridSize);
 
-	if (m_playerRect[0].y < 0)
-	{
-		speedY = 0;
-		speedY = 0;
-	}
-	else if (m_playerRect[0].y > height - m_playerRect[0].h)
-	{
-		m_playerRect[0].y = height - m_playerRect[0].h;
-	}	
+		if (m_head.x < 0)
+		{
+			speedX = 0;
+			speedY = 0;
+		}
+		else if (m_head.x > width - m_head.w)
+		{
+			m_head.x = width - m_head.w;
+		}
 
-	switch (m_snakeDir)
-	{
-	case North:
-		m_playerRect[0].y -= speedY;
-		break;
-	case West:
-		m_playerRect[0].x -= speedX;
-		break;
-	case East:
-		m_playerRect[0].x += speedX;
-		break;
-	case South:
-		m_playerRect[0].y += speedY;
-		break;
-	default:
-		break;
+		if (m_head.y < 0)
+		{
+			speedX = 0;
+			speedY = 0;
+		}
+		else if (m_head.y > height - m_head.h)
+		{
+			m_head.y = height - m_head.h;
+		}
+
+		switch (m_snakeDir)
+		{
+		case North:
+			m_head.y -= speedY;	
+			break;
+		case West:
+			m_head.x -= speedX;
+			break;
+		case East:
+			m_head.x += speedX;
+			break;
+		case South:
+			m_head.y += speedY;
+			break;
+		default:
+			break;
+		}
+
+		timeStep = 15;
 	}
 }

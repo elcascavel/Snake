@@ -41,8 +41,6 @@ int main(int arc, char* args[]) {
 			SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
 		}
 	}
-
 	game->clean();
-
 	return 0;
 }

@@ -6,8 +6,8 @@ void Snake::Food::init(int x, int y)
 {
 	foodRect.x = x;
 	foodRect.y = y;
-	foodRect.w = 15;
-	foodRect.h = 15;
+	foodRect.w = 21.33f;
+	foodRect.h = 21.33f;
 }
 
 void Snake::Food::render(SDL_Renderer* renderer)
@@ -57,6 +57,11 @@ bool Snake::Food::checkCollision(SDL_Rect a, SDL_Rect b)
 	return true;
 }
 
+int Snake::Food::getOffsetSize()
+{
+	return m_offset;;
+}
+
 void Snake::Food::update(SDL_Rect player, int width, int height, int gridSize)
 {
 	if (checkCollision(player, foodRect))
@@ -66,9 +71,10 @@ void Snake::Food::update(SDL_Rect player, int width, int height, int gridSize)
 		int cellX = rand() % gridSize;
 		int cellY = rand() % gridSize;
 
-		foodRect.x = (width / gridSize) * cellX;
-		foodRect.y = (height / gridSize) * cellY;
-		std::cout << "X = " << foodRect.x << std::endl;
-		std::cout << "Y = " << foodRect.y << std::endl;
+		foodRect.x = (width / gridSize) * cellX - m_offset;
+		foodRect.y = (height / gridSize) * cellY- m_offset;
+
+		std::cout << foodRect.x << std::endl;
+		std::cout << foodRect.y << std::endl;
 	}
 }

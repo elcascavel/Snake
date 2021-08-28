@@ -25,11 +25,14 @@ void Snake::Game::init()
     food = new Food();
     board = new Board();
 
-    srand(time(0));
-    int foodX = rand() % screen_w / board->getGridSize();
-    int foodY = rand() % screen_h / board->getGridSize();
+    int cellX = rand() % board->getGridSize();
+    int cellY = rand() % board->getGridSize();
 
-	player->init(screen_w / 2 - 15, screen_h / 2 - 15);
+    srand(time(0));
+    int foodX = (screen_w / board->getGridSize()) * cellX - food->getOffsetSize();
+    int foodY = (screen_w / board->getGridSize()) * cellY - food->getOffsetSize();
+
+	player->init(screen_w / 2 - 21, screen_h / 2 - 21);
     food->init(foodX, foodY);
 
 	is_running = true;
@@ -47,7 +50,7 @@ void Snake::Game::render()
 void Snake::Game::update()
 {
     player->update(screen_w, screen_h, board->getGridSize());
-    food->update(player->m_playerRect[0], screen_w, screen_h, board->getGridSize());
+    food->update(player->m_head, screen_w, screen_h, board->getGridSize());
 }
 
 void Snake::Game::handleEvents() {

@@ -8,7 +8,10 @@ namespace Snake {
 		void update(SDL_Rect player, int width, int height, int gridSize);
 		bool checkCollision(SDL_Rect a, SDL_Rect b);
 		
+		int getOffsetSize();
 	private:
 		SDL_Rect foodRect;
+
+		int m_offset = 16;
 	};
 }
