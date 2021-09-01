@@ -17,6 +17,7 @@ namespace Snake {
 		void setDirection(SDL_KeyCode key);
 		int getHeadXPosition() { return x; };
 		int getHeadYPosition() { return y; };
+		bool isDead() { return dead; };
 		bool wallCollision();
 		bool selfCollision();
 
@@ -38,7 +39,7 @@ namespace Snake {
 
 		Food* food = nullptr;
 
-		int timeStep = 8;
+		int timeStep = 5;
 		unsigned int direction;
 		bool dead;
 	};

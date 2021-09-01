@@ -60,6 +60,14 @@ void Snake::Game::handleEvents() {
             break;
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym) {
+            case SDLK_r:
+                if (player->isDead())
+                {
+                    score = 0;
+                    player->restart();
+                    food->respawn();
+                }
+                break;
             case SDLK_UP:
                 player->setDirection(SDLK_UP);
                 break;
@@ -85,8 +93,16 @@ void Snake::Game::handleEvents() {
 
 void Snake::Game::updateGameTitle()
 {
-    std::string title = "Snake++ | Score: " + std::to_string(score);
-    SDL_SetWindowTitle(window, title.c_str());
+    if (!player->isDead())
+    {
+        std::string title = "Snake++ | Score: " + std::to_string(score);
+        SDL_SetWindowTitle(window, title.c_str());
+    }
+    
+    else
+    {
+        SDL_SetWindowTitle(window, "Snake++ | You're dead, pal. Press R to restart.");
+    }
 }
 
 void Snake::Game::clean()

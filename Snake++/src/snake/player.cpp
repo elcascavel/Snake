@@ -57,7 +57,7 @@ void Snake::Player::update()
 		SnakeSegment nextSegment(x, y);
 		segments.push_front(nextSegment);
 		segments.pop_back();
-		timeStep = 8;
+		timeStep = 5;
 	}
 }
 
@@ -96,7 +96,7 @@ void Snake::Player::setDirection(SDL_KeyCode key)
 
 bool Snake::Player::wallCollision()
 {
-	return (x == 0 || y == 0 || x == Game::getCellWidth() || y == Game::getCellHeight());
+	return (x == -1 || y == -1 || x == Game::getCellWidth() || y == Game::getCellHeight());
 }
 
 bool Snake::Player::selfCollision()
@@ -114,11 +114,6 @@ bool Snake::Player::selfCollision()
 
 void Snake::Player::render(SDL_Renderer* renderer)
 {
-	if (dead)
-	{
-		return;
-	}
-
 	playerRect.w = Game::getCellSize();
 	playerRect.h = Game::getCellSize();
 
@@ -127,6 +122,12 @@ void Snake::Player::render(SDL_Renderer* renderer)
 
 	SDL_SetRenderDrawColor(renderer, 247, 59, 135, 255);
 	SDL_RenderFillRect(renderer, &playerRect);
+
+	if (dead)
+	{
+		SDL_SetRenderDrawColor(renderer, 107, 112, 110, 255);
+		SDL_RenderFillRect(renderer, &playerRect);
+	}
 
 	for (unsigned i = 1; i < segments.size(); i++)
 	{
