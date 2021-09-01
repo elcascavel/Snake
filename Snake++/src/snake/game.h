@@ -11,6 +11,7 @@ namespace Snake {
 	public:
 		void init();
 		void handleEvents();
+		void updateGameTitle();
 		void update();
 		void render();	
 		void clean();
@@ -40,6 +41,8 @@ namespace Snake {
 		static const unsigned START_X = CELL_WIDTH / 2;
 		static const unsigned START_Y = CELL_HEIGHT / 2;
 		static const unsigned START_LENGTH = 3;
+
+		unsigned score = 0;
 
 		Player* player = nullptr;
 		Food* food = nullptr;

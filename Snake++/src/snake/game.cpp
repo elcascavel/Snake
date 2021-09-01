@@ -12,7 +12,7 @@ void Snake::Game::init()
 
 	else {
 		// Create window
-		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("Snake++", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -41,8 +41,10 @@ void Snake::Game::render()
 void Snake::Game::update()
 {
     player->update();
+    updateGameTitle();
     if (player->getHeadXPosition() == food->getFoodXPosition() && player->getHeadYPosition() == food->getFoodYPosition())
     {
+        ++score;
         food->respawn();
         SnakeSegment nextSegment(player->x, player->y);
         player->segments.push_front(nextSegment);
@@ -79,6 +81,12 @@ void Snake::Game::handleEvents() {
             break;
         }
     }
+}
+
+void Snake::Game::updateGameTitle()
+{
+    std::string title = "Snake++ | Score: " + std::to_string(score);
+    SDL_SetWindowTitle(window, title.c_str());
 }
 
 void Snake::Game::clean()
