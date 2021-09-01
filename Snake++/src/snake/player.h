@@ -15,7 +15,8 @@ namespace Snake {
 		void restart();
 		void update();
 		void setDirection(SDL_KeyCode key);
-		bool foodCollision();
+		int getHeadXPosition() { return x; };
+		int getHeadYPosition() { return y; };
 
 		void render(SDL_Renderer* renderer);
 

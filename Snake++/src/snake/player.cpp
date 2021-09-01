@@ -42,8 +42,8 @@ void Snake::Player::update()
 	int moveX[] = { 0, 0, -1, 1 };
 	int moveY[] = { -1, 1, 0, 0 };
 
-	unsigned x = segments[0].x + moveX[direction];
-	unsigned y = segments[0].y + moveY[direction];
+	x = segments[0].x + moveX[direction];
+	y = segments[0].y + moveY[direction];
 
 	timeStep--;
 	if (timeStep <= 0)
@@ -88,10 +88,10 @@ void Snake::Player::setDirection(SDL_KeyCode key)
 	}
 }
 
-bool Snake::Player::foodCollision()
-{
-	return segments[0].x == food->x && segments[0].y == food->y;
-}
+//bool Snake::Player::foodCollision()
+//{
+//	return segments[0].x == food->x && segments[0].y == food->y;
+//}
 
 void Snake::Player::render(SDL_Renderer* renderer)
 {

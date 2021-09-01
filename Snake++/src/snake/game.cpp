@@ -41,11 +41,10 @@ void Snake::Game::render()
 void Snake::Game::update()
 {
     player->update();
-    if (player->foodCollision())
+    if (player->getHeadXPosition() == food->getFoodXPosition() && player->getHeadYPosition() == food->getFoodYPosition())
     {
         food->respawn();
     }
-    std::cout << player->foodCollision() << '\n';
 }
 
 void Snake::Game::handleEvents() {
