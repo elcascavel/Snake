@@ -17,6 +17,8 @@ namespace Snake {
 		void setDirection(SDL_KeyCode key);
 		int getHeadXPosition() { return x; };
 		int getHeadYPosition() { return y; };
+		bool wallCollision();
+		bool selfCollision();
 
 		void render(SDL_Renderer* renderer);
 

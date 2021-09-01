@@ -44,6 +44,8 @@ void Snake::Game::update()
     if (player->getHeadXPosition() == food->getFoodXPosition() && player->getHeadYPosition() == food->getFoodYPosition())
     {
         food->respawn();
+        SnakeSegment nextSegment(player->x, player->y);
+        player->segments.push_front(nextSegment);
     }
 }
 

@@ -42,12 +42,18 @@ void Snake::Player::update()
 	int moveX[] = { 0, 0, -1, 1 };
 	int moveY[] = { -1, 1, 0, 0 };
 
-	x = segments[0].x + moveX[direction];
-	y = segments[0].y + moveY[direction];
-
 	timeStep--;
 	if (timeStep <= 0)
 	{
+		x = segments[0].x + moveX[direction];
+		y = segments[0].y + moveY[direction];
+
+		if (wallCollision() || selfCollision())
+		{
+			dead = true;
+			return;
+		}
+
 		SnakeSegment nextSegment(x, y);
 		segments.push_front(nextSegment);
 		segments.pop_back();
@@ -88,10 +94,23 @@ void Snake::Player::setDirection(SDL_KeyCode key)
 	}
 }
 
-//bool Snake::Player::foodCollision()
-//{
-//	return segments[0].x == food->x && segments[0].y == food->y;
-//}
+bool Snake::Player::wallCollision()
+{
+	return (x == 0 || y == 0 || x == Game::getCellWidth() || y == Game::getCellHeight());
+}
+
+bool Snake::Player::selfCollision()
+{
+	for (unsigned i = 1; i < segments.size(); i++)
+	{
+		if (x == segments[i].x && y == segments[i].y)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
 
 void Snake::Player::render(SDL_Renderer* renderer)
 {

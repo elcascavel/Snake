@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include "player.h"
 #include "food.h"
 #include "../utils/timer.h"
