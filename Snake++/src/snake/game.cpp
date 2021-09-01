@@ -1,3 +1,4 @@
+#pragma once
 #include <SDL.h>
 #include "game.h"
 
@@ -11,7 +12,7 @@ void Snake::Game::init()
 
 	else {
 		// Create window
-		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_w, screen_h, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		window = SDL_CreateWindow("Snake++ || Score: ", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -21,20 +22,10 @@ void Snake::Game::init()
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		}
 	}
-	player = new Player();
+    
+    player = new Player();
     food = new Food();
-    board = new Board();
-
-    int cellX = rand() % board->getGridSize();
-    int cellY = rand() % board->getGridSize();
-
-    srand(time(0));
-    int foodX = (screen_w / board->getGridSize()) * cellX - food->getOffsetSize();
-    int foodY = (screen_w / board->getGridSize()) * cellY - food->getOffsetSize();
-
-	player->init(screen_w / 2 - 21, screen_h / 2 - 21);
-    food->init(foodX, foodY);
-
+    food->respawn();
 	is_running = true;
 }
 
@@ -42,15 +33,19 @@ void Snake::Game::render()
 {
 	SDL_SetRenderDrawColor(renderer, 76, 71, 79, 255);
 	SDL_RenderClear(renderer);
-	player->render(renderer);
+    player->render(renderer);
     food->render(renderer);
 	SDL_RenderPresent(renderer);
 }
 
 void Snake::Game::update()
 {
-    player->update(screen_w, screen_h, board->getGridSize());
-    food->update(player->m_head, screen_w, screen_h, board->getGridSize());
+    player->update();
+    if (player->foodCollision())
+    {
+        food->respawn();
+    }
+    std::cout << player->foodCollision() << '\n';
 }
 
 void Snake::Game::handleEvents() {
@@ -79,14 +74,6 @@ void Snake::Game::handleEvents() {
                 break;
             }
             break;
-        case SDL_WINDOWEVENT:
-            switch (event.window.event) {
-            case SDL_WINDOWEVENT_SHOWN:
-            case SDL_WINDOWEVENT_SIZE_CHANGED:
-                SDL_GetWindowSize(window, &screen_w, &screen_h);
-                break;
-            }
-            break;
         default:
             break;
         }
@@ -95,7 +82,7 @@ void Snake::Game::handleEvents() {
 
 void Snake::Game::clean()
 {
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
-	SDL_Quit();
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
 }

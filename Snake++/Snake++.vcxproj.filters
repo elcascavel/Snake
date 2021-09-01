@@ -18,36 +18,36 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\snake\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\snake\player.cpp">
+    <ClCompile Include="src\snake\snakeSegment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\snake\food.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\snake\board.cpp">
+    <ClCompile Include="src\snake\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utils\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\snake\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\snake\player.h">
+    <ClInclude Include="src\snake\snakeSegment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\snake\food.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\snake\board.h">
+    <ClInclude Include="src\snake\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

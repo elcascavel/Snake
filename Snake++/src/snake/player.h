@@ -1,23 +1,43 @@
 #pragma once
+#include "snakeSegment.h"
+#include "food.h"
+#include <deque>
 
 namespace Snake {
-	class Player {
+	class Player
+	{
 	public:
-		void init(int x, int y);
+		Player();
+		~Player();
+		unsigned x;
+		unsigned y;
+
+		void restart();
+		void update();
+		void setDirection(SDL_KeyCode key);
+		bool foodCollision();
+
 		void render(SDL_Renderer* renderer);
-		void setDirection(SDL_KeyCode direction);
-		void takeStep(int position);
-		void update(int width, int height, int gridSize);
 
-		SDL_Rect m_head;
+		enum snakeDirection {
+			NORTH = 0,
+			SOUTH,
+			WEST,
+			EAST,
+			DIRECTION_COUNT
+		};
 
+		std::deque<SnakeSegment> segments;
 	private:
+		
+		void addSegment(unsigned x, unsigned y);
+		SDL_Rect playerRect;
 
-		enum snakeDirection { North, West, East, South };
-		snakeDirection m_snakeDir = South;
+		Food* food = nullptr;
 
-		float m_snakeSpace = 21.33f;
-
-		int timeStep = 15;
+		int timeStep = 8;
+		unsigned int direction;
+		bool dead;
 	};
 }
+

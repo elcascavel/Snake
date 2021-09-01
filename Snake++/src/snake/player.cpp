@@ -1,47 +1,86 @@
 #include <SDL.h>
 #include "player.h"
+#include "food.h"
 #include "game.h"
 
-void Snake::Player::init(int x, int y)
+Snake::Player::Player()
 {
-	m_head.x = x;
-	m_head.y = y;
-	m_head.w = m_snakeSpace;
-	m_head.h = m_snakeSpace;
+	restart();
+	food = new Food();
 }
 
-void Snake::Player::render(SDL_Renderer* renderer)
+Snake::Player::~Player()
 {
-	SDL_SetRenderDrawColor(renderer, 235, 49, 108, 255);
-	SDL_RenderFillRect(renderer, &m_head);
+	segments.clear();
 }
 
-void Snake::Player::setDirection(SDL_KeyCode direction)
+void Snake::Player::restart()
 {
-	switch (direction)
+	segments.clear();
+
+	for (unsigned i = 0; i < Game::getStartLength(); i++)
+	{
+		addSegment(Game::getStartX() - i, Game::getStartY());
+	}
+	dead = false;
+	direction = snakeDirection::EAST;
+}
+
+void Snake::Player::addSegment(unsigned x, unsigned y)
+{
+	SnakeSegment segment(x, y); 
+	segments.push_back(segment);
+}
+
+void Snake::Player::update()
+{
+	if (dead)
+	{
+		return;
+	}
+
+	int moveX[] = { 0, 0, -1, 1 };
+	int moveY[] = { -1, 1, 0, 0 };
+
+	unsigned x = segments[0].x + moveX[direction];
+	unsigned y = segments[0].y + moveY[direction];
+
+	timeStep--;
+	if (timeStep <= 0)
+	{
+		SnakeSegment nextSegment(x, y);
+		segments.push_front(nextSegment);
+		segments.pop_back();
+		timeStep = 8;
+	}
+}
+
+void Snake::Player::setDirection(SDL_KeyCode key)
+{
+	switch (key)
 	{
 	case SDLK_UP:
-		if (m_snakeDir != South)
+		if (direction != snakeDirection::SOUTH)
 		{
-			m_snakeDir = North;
+			direction = snakeDirection::NORTH;
 		}
 		break;
 	case SDLK_DOWN:
-		if (m_snakeDir != North)
+		if (direction != snakeDirection::NORTH)
 		{
-			m_snakeDir = South;
+			direction = snakeDirection::SOUTH;
 		}
 		break;
 	case SDLK_LEFT:
-		if (m_snakeDir != East)
+		if (direction != snakeDirection::EAST)
 		{
-			m_snakeDir = West;
-		}	
+			direction = snakeDirection::WEST;
+		}
 		break;
 	case SDLK_RIGHT:
-		if (m_snakeDir != West)
+		if (direction != snakeDirection::WEST)
 		{
-			m_snakeDir = East;
+			direction = snakeDirection::EAST;
 		}
 		break;
 	default:
@@ -49,57 +88,33 @@ void Snake::Player::setDirection(SDL_KeyCode direction)
 	}
 }
 
-void Snake::Player::takeStep(int position)
+bool Snake::Player::foodCollision()
 {
-
+	return segments[0].x == food->x && segments[0].y == food->y;
 }
 
-void Snake::Player::update(int width, int height, int gridSize)
+void Snake::Player::render(SDL_Renderer* renderer)
 {
-	timeStep--;
-	if (timeStep <= 0)
+	if (dead)
 	{
-		float speedX = (height / gridSize);
-		float speedY = (width / gridSize);
+		return;
+	}
 
-		if (m_head.x < 0)
-		{
-			speedX = 0;
-			speedY = 0;
-		}
-		else if (m_head.x > width - m_head.w)
-		{
-			m_head.x = width - m_head.w;
-		}
+	playerRect.w = Game::getCellSize();
+	playerRect.h = Game::getCellSize();
 
-		if (m_head.y < 0)
-		{
-			speedX = 0;
-			speedY = 0;
-		}
-		else if (m_head.y > height - m_head.h)
-		{
-			m_head.y = height - m_head.h;
-		}
+	playerRect.x = segments[0].x * Game::getCellSize();
+	playerRect.y = segments[0].y * Game::getCellSize();
 
-		switch (m_snakeDir)
-		{
-		case North:
-			m_head.y -= speedY;	
-			break;
-		case West:
-			m_head.x -= speedX;
-			break;
-		case East:
-			m_head.x += speedX;
-			break;
-		case South:
-			m_head.y += speedY;
-			break;
-		default:
-			break;
-		}
+	SDL_SetRenderDrawColor(renderer, 247, 59, 135, 255);
+	SDL_RenderFillRect(renderer, &playerRect);
 
-		timeStep = 15;
+	for (unsigned i = 1; i < segments.size(); i++)
+	{
+		playerRect.x = segments[i].x * Game::getCellSize();
+		playerRect.y = segments[i].y * Game::getCellSize();
+
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_RenderFillRect(renderer, &playerRect);
 	}
 }

@@ -142,17 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\snake\board.cpp" />
-    <ClCompile Include="src\snake\food.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\snake\player.cpp" />
+    <ClCompile Include="src\snake\food.cpp" />
+    <ClCompile Include="src\snake\snakeSegment.cpp" />
     <ClCompile Include="src\snake\game.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\utils\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\snake\board.h" />
-    <ClInclude Include="src\snake\food.h" />
     <ClInclude Include="src\snake\player.h" />
+    <ClInclude Include="src\snake\food.h" />
+    <ClInclude Include="src\snake\snakeSegment.h" />
     <ClInclude Include="src\snake\game.h" />
     <ClInclude Include="src\utils\timer.h" />
   </ItemGroup>
