@@ -11,6 +11,7 @@ Snake::Player::Player()
 
 Snake::Player::~Player()
 {
+	delete food;
 	segments.clear();
 }
 
@@ -89,17 +90,15 @@ void Snake::Player::setDirection(SDL_KeyCode key)
 			direction = snakeDirection::EAST;
 		}
 		break;
-	default:
-		break;
 	}
 }
 
-bool Snake::Player::wallCollision()
+const bool Snake::Player::wallCollision()
 {
 	return (x == -1 || y == -1 || x == Game::getCellWidth() || y == Game::getCellHeight());
 }
 
-bool Snake::Player::selfCollision()
+const bool Snake::Player::selfCollision()
 {
 	for (unsigned i = 1; i < segments.size(); i++)
 	{
@@ -108,7 +107,6 @@ bool Snake::Player::selfCollision()
 			return true;
 		}
 	}
-
 	return false;
 }
 

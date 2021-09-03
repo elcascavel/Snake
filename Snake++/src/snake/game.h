@@ -6,15 +6,15 @@
 #include "../utils/timer.h"
 
 namespace Snake {
-	class Game
+	class Game final
 	{
 	public:
-		void init();
+		Game();
+		~Game();
 		void handleEvents();
 		void updateGameTitle();
 		void update();
-		void render();	
-		void clean();
+		void render();
 
 		bool isRunning() { return is_running; }
 
@@ -31,8 +31,8 @@ namespace Snake {
 		SDL_Window* window = nullptr;
 		SDL_Renderer* renderer = nullptr;
 
-		static unsigned const SCREEN_WIDTH = 800;
-		static unsigned const SCREEN_HEIGHT = 600;
+		static const unsigned SCREEN_WIDTH = 800;
+		static const unsigned SCREEN_HEIGHT = 600;
 
 		static const unsigned CELL_SIZE = 20;
 		static const unsigned CELL_WIDTH = SCREEN_WIDTH / CELL_SIZE;

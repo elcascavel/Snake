@@ -14,10 +14,10 @@ const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
 int countedFrames = 0;
 
-int main(int arc, char* args[]) {
+int main(int arc, char* args[]) 
+{
 	game = new Snake::Game();
 
-	game->init();
 	fpsTimer.start();
 
 	while (game->isRunning()) {
@@ -41,6 +41,5 @@ int main(int arc, char* args[]) {
 			SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
 		}
 	}
-	game->clean();
 	return 0;
 }

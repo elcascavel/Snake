@@ -18,8 +18,8 @@ namespace Snake {
 		int getHeadXPosition() { return x; };
 		int getHeadYPosition() { return y; };
 		bool isDead() { return dead; };
-		bool wallCollision();
-		bool selfCollision();
+		const bool wallCollision();
+		const bool selfCollision();
 
 		void render(SDL_Renderer* renderer);
 

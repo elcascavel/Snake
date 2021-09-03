@@ -1,7 +1,7 @@
 #pragma once
 
 namespace Snake {
-	class SnakeSegment
+	struct SnakeSegment
 	{
 	public:
 		unsigned x;

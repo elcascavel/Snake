@@ -2,31 +2,42 @@
 #include <SDL.h>
 #include "game.h"
 
-void Snake::Game::init()
+Snake::Game::Game()
 {
-	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-	}
+    //Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+    }
 
-	else {
-		// Create window
-		window = SDL_CreateWindow("Snake++", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (window == NULL)
-		{
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-			is_running = false;
-		}
-		else {
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-		}
-	}
-    
+    else 
+    {
+        // Create window
+        window = SDL_CreateWindow("Snake++", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if (window == NULL)
+        {
+            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+            is_running = false;
+        }
+        else 
+        {
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        }
+    }
+
     player = new Player();
     food = new Food();
     food->respawn();
-	is_running = true;
+    is_running = true;
+}
+
+Snake::Game::~Game()
+{
+    delete player;
+    delete food;
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
 }
 
 void Snake::Game::render()
@@ -51,15 +62,19 @@ void Snake::Game::update()
     }
 }
 
-void Snake::Game::handleEvents() {
+void Snake::Game::handleEvents() 
+{
     SDL_Event event;
-    if (SDL_PollEvent(&event)) {
-        switch (event.type) {
+    if (SDL_PollEvent(&event)) 
+    {
+        switch (event.type) 
+        {
         case SDL_QUIT:
             is_running = false;
             break;
         case SDL_KEYDOWN:
-            switch (event.key.keysym.sym) {
+            switch (event.key.keysym.sym) 
+            {
             case SDLK_r:
                 if (player->isDead())
                 {
@@ -85,8 +100,6 @@ void Snake::Game::handleEvents() {
                 break;
             }
             break;
-        default:
-            break;
         }
     }
 }
@@ -103,11 +116,4 @@ void Snake::Game::updateGameTitle()
     {
         SDL_SetWindowTitle(window, "Snake++ | You're dead, pal. Press R to restart.");
     }
-}
-
-void Snake::Game::clean()
-{
-    SDL_DestroyWindow(window);
-    SDL_DestroyRenderer(renderer);
-    SDL_Quit();
 }
